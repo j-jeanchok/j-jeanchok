@@ -1,0 +1,10 @@
+##用于修改自己上网端口，挂到vpn的端口实现科学上网
+export HTTPS_PROXY="http://192.168.125.xxx:xxx/"
+export HTTP_PROXY="http://192.168.125.xxx:xxx/"
+export http_proxy="http://192.168.125.xxx:xxx/"
+export https_proxy="http://192.168.125.xxx:xxx/"
+export ALL_PROXY="socks://192.168.125.xxx:xxx/"
+export all_proxy="socks://192.168.125.xxx:xxx/"
+
+#用于映射Xserver端口 投屏可视化
+  export DISPLAY=192.168.125.XXX:0
