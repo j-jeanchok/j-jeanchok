@@ -15,6 +15,7 @@ sudo apt-get install libglew-dev libboost-all-dev libssl-dev
 
 sudo apt install libeigen3-dev
 
+sudo apt-get install libpango-1.0-0
 sudo apt update
 sudo apt install libgtk-3-dev #第25行需要GTK3
 
