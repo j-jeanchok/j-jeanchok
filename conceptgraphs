@@ -11,12 +11,18 @@ mamba install -c pytorch faiss-cpu=1.7.4 mkl=2021 blas=1.0=mkl
 
 # Install Pytorch3D (https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md)
 # conda install pytorch3d -c pytorch3d # This detects a conflict. You can use the command below, maybe with a different version
-mamba install https://anaconda.org/pytorch3d/pytorch3d/0.7.4/download/linux-64/pytorch3d-0.7.4-py310_cu118_pyt201.tar.bz2
+# mamba install https://anaconda.org/pytorch3d/pytorch3d/0.7.4/download/linux-64/pytorch3d-0.7.4-py310_cu118_pyt201.tar.bz2
+# 上面这一步已经不行了，需要换个方式， 可以尝试直接在这个网址下载，
+# 然后解压的文件手动移到 conda 环境的 lib/pythonX.X/site-packages/ 目录下。
+# 重点在conda 环境的 lib/pythonX.X/site-packages/ 目录下
+https://anaconda.org/pytorch3d/pytorch3d/0.7.4/download/linux-64/pytorch3d-0.7.4-py310_cu118_pyt201.tar.bz2
+tar -xvjf pytorch3d-0.7.4-py310_cu118_pyt201.tar.bz2
 
 # We find that cuda development toolkit is the least problemantic way to install cuda. 
 # Make sure the version you install is at least close to your cuda version. 
 # See here: https://anaconda.org/conda-forge/cudatoolkit-dev
 mamba install -c conda-forge cudatoolkit-dev
+
 
 # Install the other required libraries
 pip install tyro open_clip_torch wandb h5py openai hydra-core distinctipy ultralytics dill supervision==0.21 open3d imageio natsort kornia rerun-sdk pyliblzfse pypng git+https://github.com/ultralytics/CLIP.git
