@@ -8,6 +8,9 @@ export all_proxy="socks://192.168.125.xxx:xxx/"
 
 #用于映射Xserver端口 投屏可视化
   export DISPLAY=192.168.125.XXX:0
+#直接ssh可以用-X
+例如： ssh -X root@192.168.1111111
+
 
 
 docker run --gpus all --name col_2 -w /working -v /home/yun/test_splatam/colmap/test_col:/working -dit colmap/colmap:20230923.12
