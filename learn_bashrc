@@ -20,3 +20,26 @@ docker run --privileged -dit --name kalibr --device /dev/bus/usb:/dev/bus/usb -v
 
 docker镜像源：
 https://dockerproxy.net/镜像加速
+
+
+dockerfile：
+# 使用 Ubuntu 20.04 基础镜像
+FROM ubuntu:20.04
+
+# 安装 SSH 和必要工具
+RUN apt-get update && \
+    apt-get install -y openssh-server sudo && \
+    rm -rf /var/lib/apt/lists/*
+
+# 创建 SSH 目录并设置 root 密码（这里设为 "password"，生产环境请修改）
+RUN mkdir /var/run/sshd && \
+    echo 'root:password' | chpasswd
+
+# 允许 root 通过 SSH 登录（仅用于测试，生产环境应创建普通用户）
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# 开放 SSH 端口
+EXPOSE 22
+
+# 启动 SSH 服务
+CMD ["/usr/sbin/sshd", "-D"]
