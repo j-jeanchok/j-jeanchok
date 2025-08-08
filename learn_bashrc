@@ -41,5 +41,9 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 # 开放 SSH 端口
 EXPOSE 22
 
+# 下载完整版ubuntu20
+Run apt update && \
+    apt install -y ubuntu-desktop
+
 # 启动 SSH 服务
 CMD ["/usr/sbin/sshd", "-D"]
