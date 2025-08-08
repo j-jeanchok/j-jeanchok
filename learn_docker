@@ -1,0 +1,4 @@
+docke exec -dit 进入docker容器
+docker
+# 使用root使用vscode命令
+code . --no-sandbox --user-data-dir=~/.vscode-root
