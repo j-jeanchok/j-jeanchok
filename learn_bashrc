@@ -45,5 +45,19 @@ EXPOSE 22
 Run apt update && \
     apt install -y ubuntu-desktop
 
+# 1. 导入 Microsoft GPG 密钥
+RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && \
+    install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg && \
+    rm packages.microsoft.gpg
+
+# 2. 添加 VS Code 仓库
+RUN echo "deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list
+
+# 3. 更新并安装 VS Code
+RUN apt-get update && \
+    apt-get install -y code && \
+    # 创建别名解决 root 用户问题
+    echo "alias code='code --no-sandbox --user-data-dir=/root/.vscode-root'" >> /root/.bashrc
+
 # 启动 SSH 服务
 CMD ["/usr/sbin/sshd", "-D"]
