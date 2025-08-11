@@ -85,7 +85,7 @@ RUN apt-get update && \
     # 创建别名解决 root 用户问题
     echo "alias code='code --no-sandbox --user-data-dir=/root/.vscode-root'" >> /root/.bashrc
 
-RUN apt install screen
+RUN apt-get install screen
 
 # 启动 SSH 服务
 CMD ["/usr/sbin/sshd", "-D"]
