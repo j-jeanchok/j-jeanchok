@@ -5,12 +5,12 @@ docker run --privileged -dit --name kalibr -p 50001:22 --device /dev/bus/usb:/de
 docker镜像源：
 https://dockerproxy.net/镜像加速
 
-docke exec -dit 进入docker容器
+(docke exec -dit 容器名称 bash)      进入docker容器
 
 run进去容器，exit退出，容器停止
 
 run进去容器，ctrl+p+q 退出，容器不停止
-
+ 
 
 重启容器
 docker restart 容器ID或者容器名
