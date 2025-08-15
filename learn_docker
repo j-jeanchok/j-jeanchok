@@ -42,6 +42,8 @@ docker inspect 容器id
 
 # 使用root使用vscode命令
 code . --no-sandbox --user-data-dir=~/.vscode-root
+备选：容器内如果报错闪退：
+code . --no-sandbox --disable-gpu --user-data-dir=/root/.vscode-root
 
 #这是用来创建docker镜像的 ubuntu-vscode是容器名字， . 是执行当前dockerfile
 docker build -t ubuntu-vscode .
