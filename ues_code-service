@@ -1,0 +1,33 @@
+######使用vscode-server说明（当无法使用vscode进行ssh远程开发时，需要容器内使用vscode-server和客户端使用浏览远程使用code）
+
+#1 首先在官网下载vscode-server 安装包 （注：每个版本有好几个安装包 如.tag文件）
+网址如下：https://github.com/coder/code-server/releases 
+
+#2 进入到你下载安装包的目录下，然后输入以下指令：tar -zxvf code-server-<version>-linux-amd64.tar.gz 
+#其中version替换成版本号，例如还是以4.89.1为例： tar -zxvf code-server-4.89.1-linux-amd64.tar.gz
+
+#3正常来讲应该修改配置文件（一定要去进去下面这个目录看看文件在不在） 如果不在请执进行#4
+vim ~/.config/code-server/config.yaml
+
+#4 当#3的文件不存在时，打开code-server会自动创建~/.config/code-server/config.yaml 这个文件
+cd code-server-4.89.1-linux-amd64 && ./bin/code-server
+
+#5当yaml文件存在时需要修改里面的信息
+bind-addr: 0.0.0.0:8080  # 8080是端口号，可以替换成其他的. 其中0.0.0.0代表可以让宿主机或局域网其它机器都连上，如果是127.0.0.1（容器内部回环地址），外部根本访问不到
+auth: password
+password: passwd   # 自定义密码，浏览器访问时用到，可以随便输
+cert: false
+
+#6 在终端执行#4 会在终端中打开code-server
+注：如果该终端窗口被关闭了服务也会被关闭，建议使用后台运行，如screen软件后台运行code-service
+
+#7外部连接
+外部使用浏览器登陆 http://192.168.100.169:50003/ 
+注： 记得是http开头 ，而不是 https。
+如果走https 则执行#4的时候 改成：
+./code-server \
+  --bind-addr 0.0.0.0:8080 \
+  --cert --cert-host 192.168.100.169
+
+注：容器内部使用这个service，需要映射端口
+如：我的容器service端口是8080，则我宿主机在使用容器的时需要挂载端口 -p 50003：8080，这个不会和ssh的 -p 50002：22冲突。
