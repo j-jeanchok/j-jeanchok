@@ -48,6 +48,14 @@ code . --no-sandbox --disable-gpu --user-data-dir=/root/.vscode-root
 #这是用来创建docker镜像的 ubuntu-vscode是容器名字， . 是执行当前dockerfile
 docker build -t ubuntu-vscode .
 
+# screen挂后台指令：
+screen -R 终端命名  # screen -R test  #创建后台终端
+exit  #代表终端杀死
+按ctrl a d #后台运行
+screen -ls #查看有多少终端后台
+screen -r 终端命名/PID  #如果已经有同名的终端则进入终端，否则新建终端
+
+
 
 Dockerfile:
 dockerfile：
