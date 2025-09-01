@@ -2,6 +2,17 @@ docker run --gpus all --name col_2 -w /working -v /home/yun/test_splatam/colmap/
 
 docker run --privileged -dit --name kalibr -p 50001:22 --device /dev/bus/usb:/dev/bus/usb -v /home/nfs-share/docker_sim/workspace/robot/UR/orbslam/kalibr/test:/test kalibr  docker命令
 
+docker run -dit \
+  --privileged \
+  --name display1 \
+  -p 50001:22 \
+  -p 50002:8080 \
+  --device /dev/bus/usb:/dev/bus/usb \
+  -v /home/yankong/jjz:/jjz \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  jjz_c_m2:v2
+
+
 docker镜像源：
 https://dockerproxy.net/镜像加速
 
