@@ -16,7 +16,7 @@ docker run -dit \
 docker镜像源：
 https://dockerproxy.net/镜像加速
 
-(docke exec -dit 容器名称 bash)      进入docker容器
+(docker exec -dit 容器名称 bash)      进入docker容器
 
 run进去容器，exit退出，容器停止
 
