@@ -12,6 +12,8 @@ docker run -dit \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   jjz_c_m2:v2
 
+# 当容器创建后，需要容器自启动的更新命令
+docker update --restart=always your_container_name_or_id
 
 docker镜像源：
 https://dockerproxy.net/镜像加速
