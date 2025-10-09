@@ -61,3 +61,16 @@ RUN apt-get update && \
 
 # 启动 SSH 服务
 CMD ["/usr/sbin/sshd", "-D"]
+
+# 使用gitlab
+# push命令
+  git status
+  # 放置缓存区
+  git add run_mujoco_world.py
+  git config --global user.email "jiangjinzhuo@yankong.com"
+  git config --global user.name "jjz"
+  git commit -m "add mujoco viwer demo"
+  git push
+  # 使用ssh拉取项目（速度更快）
+  git clone ssh://git@192.168.100.62:2222/tophand/tophand_core.git
+
