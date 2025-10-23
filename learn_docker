@@ -10,6 +10,7 @@ docker run -dit \
   --device /dev/bus/usb:/dev/bus/usb \
   -v /home/yankong/jjz:/jjz \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
+  --shm-size=2g （用于增加共享内容，默认只有64m，用于yolo训练时）
   jjz_c_m2:v2
 
 # 当容器创建后，需要容器自启动的更新命令
