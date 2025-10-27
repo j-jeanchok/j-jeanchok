@@ -16,6 +16,13 @@ docker run -dit \
 # 当容器创建后，需要容器自启动的更新命令
 docker update --restart=always your_container_name_or_id
 
+#临时增加共享内存：
+# 检查当前共享内存
+  df -h /dev/shm
+# 临时增加共享内存（需要sudo权限）
+  sudo mount -o remount,size=8G /dev/shm
+
+
 docker镜像源：
 https://dockerproxy.net/镜像加速
 
