@@ -1,0 +1,55 @@
+1.下载kalibr 容器（容器内有ros和opencv2.24）
+
+2.进入工作空间编译
+catkin_make
+source devel/setup.bash
+
+3.制作标定板
+rosrun kalibr kalibr_create_target_pdf --type apriltag --nx 6 --ny 6 --tsize 0.025 --tspace 0.3 --eps
+
+–type apriltag 标定板类型
+–nx [NUM_COLS] 列个数 6
+–ny [NUM_ROWS] 行个数 6
+–tsize [TAG_WIDTH_M] 二维码方格长度，单位m 0.025
+–tspace [TAG_SPACING_PERCENT] 小方格与二维码方格长度比例 0.3
+–eps 生成eps文件
+最终会在kalibr的工作空间下生成target.pdf文件。
+————————————————
+
+4. 使用相机节点（ros）录制image 然后降hz 
+realsense驱动安装以及realsense ros包
+如果相机为L515 则realsensen驱动安装2.5的版本（需要安装opencv4.20；需要把容器内的opencv2.4卸载）
+
+5.降低相机输出频率为4Hz
+# rosrun topic_tools throttle messages [相机话题] 4.0 [自定义改变频率的相机话题名字]
+# 此时要保证相机节点是启动的
+rosrun topic_tools throttle messages /usb_cam/image_raw 4.0 /usb_cam/image_raw_throttle
+————————————————
+
+6.录制rosbag
+# rosbag record [相机话题] -O [保存的bag名字]
+rosbag record /usb_cam/image_raw_throttle -O cam_calib.bag
+
+7.设置标定板配置文件，保存为.yaml文件
+target_type: 'aprilgrid' #gridtype
+tagCols: 6               #number of apriltags
+tagRows: 6               #number of apriltags
+tagSize: 0.025           #size of apriltag, edge to edge [m]
+tagSpacing: 0.3          #ratio of space between tags to tagSize
+————————————————
+
+8.相机标定
+rosrun kalibr kalibr_calibrate_cameras \
+--bag bag/cam_calib.bag  \
+--topics /usb_cam/image_raw_throttle \
+--models pinhole-radtan \
+--target config/apriltag.yaml \
+--show-extraction 
+————————————————
+–bag [录制的包]
+–topics [（降频后的）相机话题]
+–models [相机模型-畸变模型，可以参考上面的连接]
+–target [标定板配置文件]
+–show-extraction(设置表示展示角点提取过程)
+–bag-from-to 选择bag的时间段
+如果可视化有问题就把--show-extraction 注释掉
