@@ -18,6 +18,10 @@ rosrun kalibr kalibr_create_target_pdf --type apriltag --nx 6 --ny 6 --tsize 0.0
 
 4. 使用相机节点（ros）录制image 然后降hz 
 realsense驱动安装以及realsense ros包
+roslaunch realsense2_camera rs_camera.launch \
+    color_width:=1920 \
+    color_height:=1080 \
+    color_fps:=30
 如果相机为L515 则realsensen驱动安装2.5的版本（需要安装opencv4.20；需要把容器内的opencv2.4卸载）
 
 5.降低相机输出频率为4Hz
@@ -29,6 +33,8 @@ rosrun topic_tools throttle messages /usb_cam/image_raw 4.0 /usb_cam/image_raw_t
 6.录制rosbag
 # rosbag record [相机话题] -O [保存的bag名字]
 rosbag record /usb_cam/image_raw_throttle -O cam_calib.bag
+rosrun topic_tools throttle messages /camera/color/image_raw 4.0 /images
+
 
 7.设置标定板配置文件，保存为.yaml文件
 target_type: 'aprilgrid' #gridtype
@@ -40,10 +46,10 @@ tagSpacing: 0.3          #ratio of space between tags to tagSize
 
 8.相机标定
 rosrun kalibr kalibr_calibrate_cameras \
---bag bag/cam_calib.bag  \
---topics /usb_cam/image_raw_throttle \
+--bag L515_1/L515_1.bag  \
+--topics /iamges \
 --models pinhole-radtan \
---target config/apriltag.yaml \
+--target L515_1/apriltag.yaml \
 --show-extraction 
 ————————————————
 –bag [录制的包]
